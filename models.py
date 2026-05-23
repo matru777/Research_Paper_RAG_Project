@@ -63,3 +63,10 @@ class ClaimVerificationResult(BaseModel):
     is_superseded: bool
     verdict_summary: str = Field(description="High-level verdict in one or two sentences.")
     superseding_papers: list[SupersedingPaper] = Field(default_factory=list)
+
+
+class BtwRouteDecision(BaseModel):
+    """LLM-structured output deciding if a general question needs the internet."""
+    needs_web_search: bool = Field(
+        description="True if the question requires recent news, current prices, or live web data."
+    )
