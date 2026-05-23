@@ -96,8 +96,7 @@ def get_vectorstore(session_id: str) -> QdrantVectorStore:
         vector_name="dense",
         sparse_vector_name="sparse",
     )
-
-
+ 
 # ── Public API ────────────────────────────────────────────────────────────────
 
 def add_paper(docs: list[Document], session_id: str) -> None:
