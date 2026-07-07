@@ -13,11 +13,10 @@ pymupdf
 
 #Vector store 
 langchain-qdrant>=0.2.0
-qdrant-client>=1.9.0
+qdrant-client>=1.10.0
 
 #Embeddings 
-fastembed>=0.3.0                     # dense BAAI/bge-small-en-v1.5
-# FastEmbedSparse is shipped inside langchain-qdrant; BM25 runs locally
+fastembed>=0.3.0                     
 
 #Re-ranker(local / free) 
 flashrank>=0.2.0
@@ -28,5 +27,4 @@ tavily-python>=0.3.0
 #Utilities 
 python-dotenv>=1.0.0
 pydantic>=2.0.0
-streamlit
 fastapi[standard]
