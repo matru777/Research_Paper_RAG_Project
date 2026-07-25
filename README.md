@@ -10,13 +10,20 @@ A production-grade Retrieval-Augmented Generation (RAG) backend designed for que
 *   **Hierarchical Chunking:** Splits text into large context blocks ("Parent" chunks stored in PostgreSQL) and small semantic snippets ("Child" chunks stored in Qdrant).
 *   **Embedding Cache:** A local SQLite database hashes text chunks to bypass redundant CPU inference for BGE Dense and SPLADE Sparse embedding models.
 
-### 2. Query Pipeline (LangGraph)
+### 2. Intelligent Routing (LangGraph)
 *   **Semantic Cache:** An incoming query is checked against Qdrant (`rpaper_semantic_cache_v3`). If similarity exceeds 0.90, the pipeline instantly returns the cached answer.
-*   **Intent Routing:** An LLM router directs queries to either a standard QA pipeline or a strict Claim Verification pipeline.
+*   **Intent Routing:** An LLM router directs the query down one of two distinct pipelines: **Question Answering (QA)** or **Claim Verification**.
+
+### 3. The QA Pipeline
 *   **Hybrid Retrieval:** Queries execute a Reciprocal Rank Fusion (RRF) search across both dense semantic vectors and sparse exact-keyword vectors.
 *   **Web Search Fallback:** If the LLM determines the query requires external world knowledge, it searches the live internet via **Tavily** and appends the results.
 *   **Cross-Encoder Reranking:** The retrieved documents pass through **FlashRank**, mathematically scoring and ranking the most precise paragraphs at the absolute top.
 *   **Strict Grounding Check:** After answer generation, a final Judge LLM verifies that every factual claim in the output is strictly supported by the context. If a hallucination is detected, the pipeline forces a retry.
+
+### 4. The Claim Verification Pipeline
+*   **Claim Extraction:** An LLM isolates discrete factual statements from the user's input.
+*   **Dual Evidence Search:** The pipeline concurrently searches both the local uploaded documents and external academic internet sources.
+*   **Factual Verdict:** Synthesizes the internal and external evidence to produce a strict, verified verdict.
 
 ## Automated Evaluation Suite
 The system includes an automated evaluation pipeline (`evaluation/evaluate_rag.py`) utilizing the **Ragas** framework and synthetic datasets.
