@@ -34,5 +34,6 @@ def get_strong_llm():
     return ChatOpenAI(
         model="gpt-4o", 
         temperature=0, 
-        api_key=settings.OPENAI_API_KEY
+        api_key=settings.OPENAI_API_KEY,
+        streaming=True
     )

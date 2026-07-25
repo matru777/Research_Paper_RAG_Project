@@ -1,4 +1,8 @@
 #Orchestration
+ragas
+datasets
+rich
+pandas
 langgraph>=0.2.0
 langgraph-checkpoint-sqlite          
 
@@ -9,7 +13,8 @@ langchain-openai
 langchain-core>=0.3.0
 langchain-community>=0.3.0
 langchain-text-splitters>=0.3.0
-pymupdf                              
+pymupdf
+pymupdf4llm
 
 #Vector store 
 langchain-qdrant>=0.2.0
@@ -28,3 +33,10 @@ tavily-python>=0.3.0
 python-dotenv>=1.0.0
 pydantic>=2.0.0
 fastapi[standard]
+
+sqlalchemy
+asyncpg
+alembic
+arq 
+redis
+langgraph-checkpoint-postgres

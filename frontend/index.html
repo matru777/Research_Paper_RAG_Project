@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research RAG AI</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Markdown Parser & Sanitizer -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar for Document Uploads -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Research RAG</h2>
+            </div>
+            
+            <div class="upload-section">
+                <h3>Load Document</h3>
+                <p class="subtitle">Enter an ArXiv ID, URL, or local file path</p>
+                <div class="input-group">
+                    <input type="text" id="document-source" placeholder="e.g. 1706.03762">
+                    <button id="upload-btn">Load</button>
+                </div>
+                <div id="upload-status" class="status-container hidden">
+                    <div class="spinner"></div>
+                    <span id="status-text">Processing...</span>
+                </div>
+            </div>
+            
+            <div class="documents-list">
+                <h3>Session Documents</h3>
+                <ul id="docs-ul">
+                    <!-- Dynamically populated -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-container">
+            <div class="chat-header">
+                <h2>Chat Assistant</h2>
+                <div class="session-badge">Session: <span id="session-id-display"></span></div>
+            </div>
+            
+            <div id="chat-history" class="chat-history">
+                <div class="message ai">
+                    <div class="avatar">AI</div>
+                    <div class="content">
+                        Hello! I am your Research Assistant. Load a paper on the left, and ask me anything about it, or ask me to verify a specific claim!
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input-container">
+                <textarea id="chat-input" placeholder="Ask a question about the loaded papers..." rows="1"></textarea>
+                <button id="send-btn">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+            </div>
+        </main>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

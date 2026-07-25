@@ -1,0 +1,54 @@
+
+# Services are the individual containers (computers) we want to spin up
+services:
+  
+  # ----------------------------------------------------
+  # 1. PostgreSQL: Our Relational Database
+  # ----------------------------------------------------
+  postgres:
+    # We use 'alpine' because it is a very small, fast version of Linux
+    image: postgres:15-alpine
+    container_name: rpaper-postgres
+    # If the container crashes, Docker will automatically restart it
+    restart: always
+    # These variables tell Postgres how to set up the default database
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_DB: research_rag
+    # Maps your computer's port (left) to the container's port (right)
+    ports:
+      - "5432:5432"
+    # Volumes save data permanently. Without this, your DB wipes on restart.
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # ----------------------------------------------------
+  # 2. Qdrant: Our Vector Database
+  # ----------------------------------------------------
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: rpaper-qdrant
+    restart: always
+    ports:
+      - "6333:6333" # Standard HTTP / REST port
+      - "6334:6334" # Fast gRPC port (Used automatically by Python client)
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  # ----------------------------------------------------
+  # 3. Redis: Our Message Queue / Broker
+  # ----------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: rpaper-redis
+    restart: always
+    ports:
+      - "6380:6379"
+    # Redis just holds temporary background tasks in memory, 
+    # so we usually don't need a permanent storage volume for it.
+
+# We must declare the volumes at the bottom of the file to actually create them
+volumes:
+  postgres_data:
+  qdrant_data:
